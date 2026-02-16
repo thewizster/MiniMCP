@@ -42,6 +42,11 @@ The getting started guide covers:
 - Detailed code explanations
 - How to extend with your own features
 
+**Additional Resources:**
+- [FAQ.md](FAQ.md) - Frequently asked questions and troubleshooting
+- [ADVANCED.md](ADVANCED.md) - Advanced features and real-world examples
+- [CONTRIBUTING.md](CONTRIBUTING.md) - Guidelines for contributors
+
 ## 🛠️ What's Included
 
 ### Tools

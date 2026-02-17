@@ -9,8 +9,8 @@
  * - Prompts: Templates that can be used by the client
  */
 
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { Server } from "npm:@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "npm:@modelcontextprotocol/sdk/server/stdio.js";
 import {
   CallToolRequestSchema,
   ListResourcesRequestSchema,
@@ -18,7 +18,7 @@ import {
   ReadResourceRequestSchema,
   ListPromptsRequestSchema,
   GetPromptRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
+} from "npm:@modelcontextprotocol/sdk/types.js";
 
 // Initialize the MCP server
 const server = new Server(

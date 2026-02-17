@@ -1,113 +1,107 @@
 # MiniMCP
 
-A minimalistic, fully functional Model Context Protocol (MCP) server built with TypeScript and Deno. Perfect for learning and understanding how MCP servers work!
+A tiny, declarative MCP server built with Deno and TypeScript. Define tools, resources, and prompts
+in plain objects — no boilerplate.
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
-# Install Deno (if not already installed)
+# 1. Install Deno (if needed)
 curl -fsSL https://deno.land/install.sh | sh
 
-# Clone and run
+# 2. Clone & run
 git clone https://github.com/thewizster/MiniMCP.git
 cd MiniMCP
 deno task start
 ```
 
-## 📖 What is MiniMCP?
+## What Is This?
 
-MiniMCP is a beginner-friendly MCP server that demonstrates the three core capabilities:
+**MCP (Model Context Protocol)** lets AI apps like Claude call your code. MiniMCP makes building an
+MCP server as simple as possible:
 
-- **🔧 Tools**: Simple functions (echo, add) that AI can call
-- **📦 Resources**: Data sources (greeting message) that AI can read  
-- **💬 Prompts**: Templates (greeting) that AI can use
+```typescript
+import { MiniMCP } from "./src/server.ts";
 
-## ✨ Features
+const mcp = new MiniMCP("my-server");
 
-- ✅ Fully functional MCP server implementation
-- ✅ Written in TypeScript for type safety
-- ✅ Uses Deno for modern JavaScript runtime
-- ✅ Includes example tools, resources, and prompts
-- ✅ Well-commented code for learning
-- ✅ Comprehensive getting started guide
+mcp.addTool({
+  name: "greet",
+  description: "Say hello",
+  inputs: { name: { type: "string", description: "Who to greet" } },
+  handler: ({ name }) => `Hello, ${name}!`,
+});
 
-## 📚 Documentation
+mcp.start();
+```
 
-**New to MCP?** Start here: [GETTING_STARTED.md](GETTING_STARTED.md)
+That's it. Three concepts, one API:
 
-The getting started guide covers:
-- What is MCP and why it's useful
-- Step-by-step installation instructions
-- How to run and test the server
-- Detailed code explanations
-- How to extend with your own features
+| Concept       | What it does              | Method          |
+| ------------- | ------------------------- | --------------- |
+| **Tools**     | Functions the AI can call | `addTool()`     |
+| **Resources** | Data the AI can read      | `addResource()` |
+| **Prompts**   | Templates the AI can use  | `addPrompt()`   |
 
-**Additional Resources:**
-- [FAQ.md](FAQ.md) - Frequently asked questions and troubleshooting
-- [ADVANCED.md](ADVANCED.md) - Advanced features and real-world examples
-- [CONTRIBUTING.md](CONTRIBUTING.md) - Guidelines for contributors
-
-## 🛠️ What's Included
-
-### Tools
-- `echo` - Returns your input message (great for testing)
-- `add` - Adds two numbers together
-
-### Resources
-- `greeting://hello` - A simple greeting message
-
-### Prompts
-- `greeting` - A customizable greeting prompt template
-
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 MiniMCP/
 ├── src/
-│   └── index.ts          # Main server implementation
-├── deno.json             # Deno configuration and tasks
-├── GETTING_STARTED.md    # Comprehensive beginner guide
-└── README.md             # This file
+│   ├── server.ts          # MiniMCP helper class (the framework)
+│   ├── index.ts            # Example server using the API
+│   └── server_test.ts      # Tests
+├── deno.json               # Tasks and config
+├── GETTING_STARTED.md       # Setup guide
+└── README.md
 ```
 
-## 🧪 Testing
+## Test With Claude Desktop
 
-### Option 1: Claude Desktop
-Configure Claude Desktop to connect to MiniMCP and test the tools interactively.
+Add to your Claude Desktop config
+(`~/Library/Application Support/Claude/claude_desktop_config.json`):
 
-### Option 2: MCP Inspector
+```json
+{
+  "mcpServers": {
+    "minimcp": {
+      "command": "deno",
+      "args": ["run", "--allow-all", "/full/path/to/MiniMCP/src/index.ts"]
+    }
+  }
+}
+```
+
+Or use the MCP Inspector:
+
 ```bash
 npx @modelcontextprotocol/inspector deno run --allow-all src/index.ts
 ```
 
-See [GETTING_STARTED.md](GETTING_STARTED.md) for detailed testing instructions.
+## Deno Tasks
 
-## 🎓 Learning Path
+```bash
+deno task start   # Run the server
+deno task dev     # Run with auto-reload
+deno task lint    # Lint
+deno task fmt     # Format
+deno task check   # Type-check
+deno task test    # Run tests
+```
 
-1. Read [GETTING_STARTED.md](GETTING_STARTED.md) to understand MCP basics
-2. Run the server and test it with a client
-3. Read through `src/index.ts` - it's well commented!
-4. Try adding your own tool, resource, or prompt
-5. Build something useful!
+## Docs
 
-## 🤝 Contributing
+- [Getting Started](GETTING_STARTED.md) — Install, run, extend
+- [Advanced Guide](ADVANCED.md) — Real-world patterns
+- [FAQ](FAQ.md) — Common questions
+- [Contributing](CONTRIBUTING.md) — How to help
 
-This is a learning project! Feel free to:
-- Report issues
-- Suggest improvements
-- Submit pull requests
-- Share what you built!
+## Links
 
-## 📝 License
+- [MCP Docs](https://modelcontextprotocol.io)
+- [Deno](https://deno.land)
+- [MCP SDK](https://github.com/modelcontextprotocol/typescript-sdk)
 
-MIT License - feel free to use this for learning and building!
+## License
 
-## 🔗 Resources
-
-- [Model Context Protocol Documentation](https://modelcontextprotocol.io)
-- [Deno Documentation](https://deno.land/manual)
-- [MCP GitHub Repository](https://github.com/modelcontextprotocol)
-
----
-
-Built with ❤️ for learning MCP
+MIT

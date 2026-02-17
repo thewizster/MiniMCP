@@ -47,7 +47,7 @@ mcp.addPrompt({
   name: "greeting",
   description: "A customizable greeting prompt",
   args: [{ name: "name", description: "Name of the person to greet", required: true }],
-  handler: ({ name }) => `Hello ${name ?? "friend"}! Welcome to MiniMCP.`,
+  handler: ({ name }) => `Hello ${name}! Welcome to MiniMCP.`,
 });
 
 // ── Start ───────────────────────────────────────────────────────────────────

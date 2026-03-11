@@ -32,6 +32,22 @@ mcp.addTool({
   handler: ({ a, b }) => `${a} + ${b} = ${(a as number) + (b as number)}`,
 });
 
+mcp.addTool({
+  name: "hash",
+  description: "Hashes the input text using SHA-256 and returns the hex digest.",
+  inputs: {
+    text: { type: "string", description: "The text to hash" },
+  },
+  handler: async ({ text }) => {
+    const data = new TextEncoder().encode(text as string);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hex = [...new Uint8Array(hashBuffer)]
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+    return `SHA-256: ${hex}`;
+  },
+});
+
 // ── Resources ───────────────────────────────────────────────────────────────
 
 mcp.addResource({

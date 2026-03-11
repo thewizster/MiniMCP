@@ -118,6 +118,44 @@ mcp.addTool({
 
 Restart the server and ask Claude to use it.
 
+## 6. Using the Hash Tool
+
+MiniMCP includes a built-in `hash` tool that computes a SHA-256 hash of any input text. This is useful for generating checksums, verifying data integrity, or fingerprinting content.
+
+### Code
+
+```typescript
+mcp.addTool({
+  name: "hash",
+  description: "Hashes the input text using SHA-256 and returns the hex digest.",
+  inputs: {
+    text: { type: "string", description: "The text to hash" },
+  },
+  handler: async ({ text }) => {
+    const data = new TextEncoder().encode(text as string);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hex = [...new Uint8Array(hashBuffer)]
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+    return `SHA-256: ${hex}`;
+  },
+});
+```
+
+### Example
+
+**Input text:**
+
+> MiniMCP makes it easy to build custom MCP servers with Deno. Define tools, resources, and prompts using a simple declarative API, then connect your server to any MCP-compatible client like Claude Desktop or VS Code Copilot.
+
+**Output:**
+
+```
+SHA-256: 9395707aa156e4eb21d0905c94ee97f62a2e257e320af1df65e9f132014ac27f
+```
+
+Try it yourself — ask the AI to *"hash this text"* with any input, and the tool will return its SHA-256 digest.
+
 ## Tips
 
 - Use `console.error()` for debug logging — `console.log()` breaks the protocol because stdout is
